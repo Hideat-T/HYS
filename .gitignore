@@ -1,0 +1,10 @@
+# Ignoriert node_modules in JEDEM Ordner
+node_modules/
+dist/
+.DS_Store
+.env
+
+# Ignoriert die Bilder und die lokale Datenbank im Backend
+Backend/uploads/*
+!Backend/uploads/.gitkeep
+Backend/src/properties.json
