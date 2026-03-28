@@ -21,13 +21,16 @@ const { locale } = useI18n()
           
           <!-- DER SPRACH-UMSCHALTER -->
           <select 
-            v-model="locale" 
-            class="bg-gray-100 border-none p-2 rounded-xl text-sm font-bold focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer"
-          >
-            <option value="en">🇬🇧 EN</option>
-            <option value="am">🇪🇹 AM (አማርኛ)</option>
-            <option value="de">🇩🇪 DE</option>
-          </select>
+  v-model="locale" 
+  class="bg-gray-100 border-none p-2 rounded-xl text-sm font-bold outline-none cursor-pointer"
+>
+  <option value="en">🇬🇧 EN</option>
+  <option value="am">🇪🇹 AM (አማርኛ)</option>
+  <option value="om">🇪🇹 OM (Oromoo)</option> <!-- NEU -->
+  <option value="ti">🇪🇹 TI (ትግርኛ)</option> <!-- NEU -->
+  <option value="de">🇩🇪 DE</option>
+  <option value="fr">🇫🇷 FR (Français)</option>
+</select>
 
           <!-- Dynamischer Button: Der Text kommt jetzt aus dem 'Wörterbuch' -->
           <router-link 

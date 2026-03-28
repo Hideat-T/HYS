@@ -29,6 +29,8 @@ app.get('/api/properties', (req, res) => res.json(properties));
 app.post('/api/properties', upload.single('image'), (req, res) => {
     const newProperty = {
         id: Date.now(),
+        userType: req.body.userType,          // NEU: 'private', 'broker' oder 'developer'
+        nameOrCompany: req.body.nameOrCompany, // NEU: Der Name der Person/Firma
         title: req.body.title,
         location: req.body.location,
         price: Number(req.body.price),
@@ -37,11 +39,11 @@ app.post('/api/properties', upload.single('image'), (req, res) => {
         description: req.body.description,
         imageUrl: req.file ? `http://localhost:3000/uploads/${req.file.filename}` : 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800'
     };
+
     properties.push(newProperty);
-    saveProperties();
+    saveProperties(properties);
     res.status(201).json(newProperty);
 });
-
 // --- NEU: DIE LÖSCH-ROUTE ---
 app.delete('/api/properties/:id', (req, res) => {
     const id = Number(req.params.id);
