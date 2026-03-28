@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "title": "Moderner Neubau in Bole",
+    "description": "Wunderschönes Apartment in der Nähe vom Flughafen. Perfekt für Expats.",
+    "price": 12000000,
+    "location": "Addis Abeba, Bole",
+    "rooms": 3,
+    "type": "Apartment",
+    "imageUrl": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800"
+  },
+  {
+    "id": 2,
+    "title": "Große Villa in Sarbet",
+    "description": "Viel Platz für die ganze Familie mit großem Garten und Sicherheitssystem.",
+    "price": 45000000,
+    "location": "Addis Abeba, Sarbet",
+    "rooms": 6,
+    "type": "House",
+    "imageUrl": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800"
+  },
+  {
+    "id": 1774622124714,
+    "title": "Apartama in Sengatera",
+    "location": "Sengatera",
+    "price": 2000000,
+    "rooms": 2,
+    "type": "Apartment",
+    "description": "I want to rent my haus for 1 year ",
+    "imageUrl": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800"
+  },
+  {
+    "id": 1774623052332,
+    "title": "Mikes house",
+    "location": "Bole, Addis Ababa",
+    "price": 2,
+    "rooms": 5,
+    "type": "Apartment",
+    "description": "Ich will meine Wohnung bis ende des Jahres vermiten. ",
+    "imageUrl": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800"
+  },
+  {
+    "id": 1774624989173,
+    "title": "meine wohnung zu vermittern",
+    "location": "Sengatera ",
+    "price": 5000000000,
+    "rooms": 2,
+    "type": "Apartment",
+    "description": "fdfsdfsdfdsfsdfdsfdsfdsfsdfdsfdsfdsfdsfdfsfdsfsdf",
+    "imageUrl": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800"
+  },
+  {
+    "id": 1774706727371,
+    "title": "beteyamral",
+    "location": "cmc",
+    "price": 100000000,
+    "rooms": 1,
+    "type": "Apartment",
+    "description": "beten lakerayew new",
+    "imageUrl": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800"
+  },
+  {
+    "id": 1774709314703,
+    "title": "test",
+    "location": "test",
+    "price": 0,
+    "rooms": 1,
+    "type": "Apartment",
+    "description": "test",
+    "imageUrl": "http://localhost:3000/uploads/1774709314701-Bewerberfoto.jpg"
+  }
+]
