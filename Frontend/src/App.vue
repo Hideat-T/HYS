@@ -1,54 +1,111 @@
 <script setup lang="ts">
-// 1. Wir importieren die Sprach-Steuerung
+import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+
 const { locale } = useI18n()
+const currentUser = ref<any>(null)
+
+// Diese Funktion sucht im Speicher des Browsers nach dem User
+const checkUser = () => {
+  const savedUser = localStorage.getItem('user')
+  if (savedUser) {
+    currentUser.value = JSON.parse(savedUser)
+  } else {
+    currentUser.value = null
+  }
+}
+
+onMounted(() => {
+  checkUser()
+})
+
+const handleLogout = () => {
+  localStorage.removeItem('user')
+  currentUser.value = null
+  window.location.href = "/" 
+}
 </script>
 
 <template>
   <div class="min-h-screen bg-gray-50 font-sans text-gray-900">
     
-    <!-- NAVIGATION -->
-    <nav class="bg-white shadow-md p-4 sticky top-0 z-50">
-      <div class="max-w-6xl mx-auto flex justify-between items-center">
+    <!-- NAVIGATION BAR -->
+    <!-- NAVIGATION BAR -->
+   <!-- [SECTION: LUXURY NAVIGATION WITH IMAGE LOGO] -->
+    <nav class="bg-[#0A1128] shadow-2xl p-4 sticky top-0 z-50 border-b border-[#D4AF37]/30">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
         
-        <!-- Logo -->
-        <router-link to="/" class="text-3xl font-black text-blue-900 tracking-tighter">
-          HYS <span class="text-yellow-500">IMMO</span> 🇪🇹
+        <!-- LEFT: BRANDING -->
+        <router-link to="/" class="flex items-center group">
+          <!-- THE LOGO IMAGE -->
+          <img 
+            src="./assets/logo-gold.png" 
+            alt="HYS Real Estate" 
+            class="h-10 md:h-14 w-auto transition-transform duration-300 group-hover:scale-110"
+          />
+          <!-- BRAND NAME IN CINZEL FONT -->
+          <span class="logo-style-text text-xl ml-3 tracking-[0.2em] hidden sm:block uppercase">
+            HYS IMMO
+          </span>
         </router-link>
-        
-        <!-- Rechts: Sprachwähler + Button -->
-        <div class="flex items-center gap-4">
-          
-          <!-- DER SPRACH-UMSCHALTER -->
-          <select 
-  v-model="locale" 
-  class="bg-gray-100 border-none p-2 rounded-xl text-sm font-bold outline-none cursor-pointer"
->
-  <option value="en">🇬🇧 EN</option>
-  <option value="am">🇪🇹 AM (አማርኛ)</option>
-  <option value="om">🇪🇹 OM (Oromoo)</option> <!-- NEU -->
-  <option value="ti">🇪🇹 TI (ትግርኛ)</option> <!-- NEU -->
-  <option value="de">🇩🇪 DE</option>
-  <option value="fr">🇫🇷 FR (Français)</option>
-</select>
 
-          <!-- Dynamischer Button: Der Text kommt jetzt aus dem 'Wörterbuch' -->
-          <router-link 
-            to="/add" 
-            class="bg-blue-900 text-white px-5 py-2 rounded-xl font-bold shadow-lg hover:bg-blue-800 transition-all hidden md:block"
-          >
-            {{ $t('nav.add') }}
-          </router-link>
+        <!-- RIGHT: MENU & AUTH -->
+        <div class="flex items-center gap-4 md:gap-8">
+          
+          <!-- PRIVATE DASHBOARD LINKS (Only if logged in) -->
+          <div v-if="currentUser" class="hidden lg:flex items-center gap-6 border-r border-white/10 pr-6">
+            <router-link to="/my-listings" class="text-white/70 hover:text-[#D4AF37] text-[10px] font-black uppercase tracking-widest transition-colors">
+              {{ $t('nav.home') }}
+            </router-link>
+            <router-link to="/profile" class="text-white/70 hover:text-[#D4AF37] text-[10px] font-black uppercase tracking-widest transition-colors">
+              Profile
+            </router-link>
+          </div>
+
+          <!-- LANGUAGE SELECTOR -->
+          <select v-model="locale" class="bg-white/5 text-white border border-white/10 p-2 rounded-xl text-[10px] font-black outline-none cursor-pointer hover:bg-white/10 transition-all">
+            <option class="text-black" value="en">GB EN</option>
+            <option class="text-black" value="am">ET AM</option>
+            <option class="text-black" value="om">ET OM</option>
+            <option class="text-black" value="ti">ET TI</option>
+            <option class="text-black" value="fr">FR FR</option>
+            <option class="text-black" value="de">DE DE</option>
+          </select>
+
+          <!-- AUTH ACTIONS -->
+          <div class="flex items-center gap-4">
+            <div v-if="currentUser" class="flex items-center gap-3">
+              <div class="hidden sm:flex flex-col items-end">
+                <span class="text-[#D4AF37] font-black text-[10px] italic leading-none">Hello,</span>
+                <span class="text-white font-black text-xs uppercase">{{ currentUser.name }}</span>
+              </div>
+              <button @click="handleLogout" class="text-red-400 text-[9px] font-black uppercase border border-red-400/30 px-2 py-1 rounded-lg hover:bg-red-400 hover:text-white transition-all">
+                Logout
+              </button>
+            </div>
+            
+            <router-link v-else to="/login" class="text-[#D4AF37] font-black text-[10px] uppercase tracking-widest hover:text-white transition-colors">
+              {{ $t('nav.login') }}
+            </router-link>
+
+            <!-- POST AD BUTTON (Shiny Gold) -->
+            <router-link 
+              to="/add" 
+              class="bg-gold-gradient text-[#0A1128] px-4 py-2 md:px-5 md:py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-[0_5px_20px_rgba(212,175,55,0.3)] hover:brightness-110 active:scale-95 transition-all border-t border-white/20"
+            >
+              {{ $t('nav.add') }}
+            </router-link>
+          </div>
+
         </div>
       </div>
     </nav>
-
-    <!-- ROUTER VIEW (Hier landen HomeView, DetailsView oder AddView) -->
+    <!-- ROUTER VIEW (Where the pages appear) -->
     <router-view />
 
     <!-- FOOTER -->
     <footer class="p-10 text-center text-gray-400 mt-10">
-      &copy; 2024 HYS Real Estate - Addis Abeba, Ethiopia
+      &copy; 2024 HYS Real Estate - Addis Ababa, Ethiopia
     </footer>
   </div>
 </template>

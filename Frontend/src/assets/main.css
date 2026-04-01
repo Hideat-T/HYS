@@ -1,1 +1,30 @@
-@import "tailwindcss"
+@import "tailwindcss";
+
+@theme {
+  --color-hys-blue: #0a1128;
+  --color-hys-gold: #d4af37;
+  --font-cinzel: "Cinzel", serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap');
+
+@utility text-gold-gradient {
+  background: linear-gradient(135deg, #f2e5ac, #e6c76a, #d4af37, #c9a227, #a67c00);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+@utility bg-gold-gradient {
+  background: linear-gradient(135deg, #f2e5ac, #d4af37, #a67c00);
+}
+
+.logo-style-text {
+  font-family: var(--font-cinzel);
+  font-weight: 900;
+  background: linear-gradient(135deg, #f2e5ac, #d4af37, #a67c00);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
