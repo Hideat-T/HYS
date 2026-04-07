@@ -5,6 +5,9 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const properties = ref<any[]>([])
 const loading = ref(true)
+const currentUser = ref<any>(null)
+
+// --- Filter-Logik ---
 const searchQuery = ref('')
 const selectedType = ref('All')
 
@@ -14,7 +17,7 @@ const fetchProperties = async () => {
     const data = await response.json()
     properties.value = data
   } catch (error) {
-    console.error("Error loading properties:", error)
+    console.error("Error:", error)
   } finally {
     loading.value = false
   }
@@ -26,7 +29,7 @@ const deleteProperty = async (id: number) => {
     const response = await fetch(`http://localhost:3000/api/properties/${id}`, { method: 'DELETE' })
     if (response.ok) fetchProperties()
   } catch (error) {
-    console.error("Error deleting:", error)
+    console.error(error)
   }
 }
 
@@ -41,70 +44,129 @@ const filteredProperties = computed(() => {
 
 onMounted(() => {
   fetchProperties()
+  const savedUser = localStorage.getItem('user')
+  if (savedUser) currentUser.value = JSON.parse(savedUser)
 })
 </script>
 
 <template>
-  <div class="max-w-6xl mx-auto p-6 min-h-[60vh]">
-    <!-- Header -->
-    <!-- HEADER SECTION -->
-<header class="mb-12 text-center py-10 bg-[#0A1128] rounded-[3rem] shadow-2xl border border-[#D4AF37]/20 mt-6 mx-4">
-  <h1 class="logo-style-text text-5xl md:text-7xl mb-4 tracking-tighter drop-shadow-2xl">
-    {{ $t('home.title') }}
-  </h1>
-  <p class="text-[#D4AF37]/80 text-lg uppercase tracking-[0.5em] font-light italic">
-    ETHIOPIA'S PREMIUM PORTAL <span class="align-top text-xs ml-2">ET</span>
-  </p>
-  <div class="w-40 h-1 bg-gold-gradient mx-auto mt-6 rounded-full shadow-[0_0_15px_#D4AF37]"></div>
-</header>
-
-    <!-- Search Bar -->
-    <div class="bg-white p-5 rounded-[2rem] shadow-xl mb-12 flex flex-col md:flex-row gap-4 border border-blue-50">
-      <div class="flex-1 relative">
-        <span class="absolute left-5 top-4 text-gray-400">🔍</span>
-        <input v-model="searchQuery" type="text" :placeholder="$t('home.search')" class="w-full pl-14 pr-6 py-4 rounded-2xl border-none bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none" />
-      </div>
-      <select v-model="selectedType" class="bg-gray-50 px-6 py-4 rounded-2xl border-none outline-none font-bold text-gray-600 cursor-pointer">
-        <option value="All">{{ $t('home.all') }}</option>
-        <option value="House">{{ $t('home.house') }}</option>
-        <option value="Apartment">{{ $t('home.apartment') }}</option>
-      </select>
-    </div>
-
-    <!-- Results -->
-    <div v-if="loading" class="text-center py-20">Loading...</div>
+  <div class="max-w-7xl mx-auto px-4 pb-20">
     
-    <div v-else-if="filteredProperties.length === 0" class="text-center py-20 text-gray-400 italic">
-      {{ $t('home.noResults') }}
+    <!-- [SECTION 2: LUXURY HERO BOX] -->
+    <section class="mt-8 mb-12">
+      <div class="bg-linear-to-br from-[#0B1C2E] to-[#0F2A44] rounded-[40px] py-20 px-6 text-center shadow-2xl border border-white/5 relative overflow-hidden">
+        <!-- Deko-Effekt im Hintergrund -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-hys-gold/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+        
+        <h1 class="text-gold-gradient text-5xl md:text-7xl font-black mb-6 tracking-tighter italic">
+          {{ $t('home.title') }}
+        </h1>
+        
+        <!-- Kleine goldene Linie aus dem Screenshot -->
+        <div class="w-32 h-1 bg-gold-gradient mx-auto mb-8 rounded-full shadow-[0_0_15px_rgba(212,175,55,0.6)]"></div>
+        
+        <p class="text-white/60 text-sm md:text-base uppercase tracking-[0.4em] font-light">
+          Ethiopia's Premium Real Estate Portal <span class="text-hys-gold ml-2">ET</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- [SECTION: FLOATING SEARCH BAR] -->
+    <div class="max-w-4xl mx-auto -mt-20 relative z-20 mb-20 px-4">
+      <div class="bg-white p-4 rounded-3xl shadow-[0_20px_50px_rgba(11,28,46,0.15)] flex flex-col md:flex-row gap-4 border border-gray-100">
+        <div class="flex-1 relative">
+          <span class="absolute left-5 top-4 text-gray-400">🔍</span>
+          <input 
+            v-model="searchQuery" 
+            type="text" 
+            :placeholder="$t('home.search')" 
+            class="w-full pl-14 pr-6 py-4 rounded-2xl border-none bg-gray-50 focus:ring-2 focus:ring-hys-gold outline-none transition-all font-medium"
+          />
+        </div>
+        <select 
+          v-model="selectedType"
+          class="bg-gray-50 px-8 py-4 rounded-2xl border-none outline-none focus:ring-2 focus:ring-hys-gold font-bold text-hys-navy cursor-pointer"
+        >
+          <option value="All">{{ $t('home.all') }}</option>
+          <option value="House">{{ $t('home.house') }}</option>
+          <option value="Apartment">{{ $t('home.apartment') }}</option>
+        </select>
+      </div>
     </div>
 
+    <!-- [SECTION: PROPERTY LIST] -->
+    <div class="flex justify-between items-end mb-10 px-2">
+      <div>
+        <h2 class="text-hys-navy text-3xl font-black uppercase tracking-tighter">Featured Listings</h2>
+        <div class="w-12 h-1 bg-hys-gold mt-2 rounded-full"></div>
+      </div>
+      <p class="text-gray-400 text-sm font-medium">{{ filteredProperties.length }} Results</p>
+    </div>
+
+    <!-- Ladeanzeige -->
+    <div v-if="loading" class="text-center py-20">
+       <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-hys-navy mx-auto"></div>
+    </div>
+
+    <!-- Grid -->
     <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-      <div v-for="prop in filteredProperties" :key="prop.id" class="bg-white rounded-[2.5rem] shadow-lg overflow-hidden border border-gray-50 hover:shadow-2xl transition-all">
-        <img :src="prop.imageUrl" class="w-full h-64 object-cover" />
-        
-        <div class="p-8">
-          <h2 class="text-2xl font-black text-gray-800 mb-1">{{ prop.title }}</h2>
-          <p class="text-gray-400 text-sm mb-4">📍 {{ prop.location }}</p>
+      
+      <div v-if="filteredProperties.length === 0" class="col-span-full text-center py-20 text-gray-400 italic">
+        {{ $t('home.noResults') }}
+      </div>
+
+      <!-- PREMIUM PROPERTY CARD -->
+      <div v-for="prop in filteredProperties" :key="prop.id" class="property-card flex flex-col h-full group">
+        <!-- Image with Badge -->
+        <div class="relative h-72 overflow-hidden rounded-t-[24px]">
+          <img :src="prop.imageUrl" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+          <div class="absolute top-5 right-5 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] font-black text-hys-navy shadow-lg uppercase tracking-widest">
+            {{ prop.type === 'Apartment' ? $t('home.apartment') : $t('home.house') }}
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-8 flex flex-col flex-1">
+          <h3 class="text-xl font-black text-hys-navy mb-1 leading-tight">{{ prop.title }}</h3>
+          <p class="text-gray-400 text-xs mb-4 font-medium italic">📍 {{ prop.location }}</p>
           
-          <!-- New: Seller Info -->
-          <div class="flex items-center gap-2 mb-4 bg-blue-50 p-2 rounded-lg inline-flex">
-             <span class="text-xs font-bold text-blue-900 uppercase">👤 {{ prop.ownerName || 'Private' }}</span>
+          <!-- User Badge -->
+          <div class="flex items-center gap-2 mb-6">
+            <div class="bg-hys-bg px-3 py-1 rounded-lg text-[10px] font-bold text-hys-navy border border-gray-100 uppercase tracking-tighter">
+              👤 {{ prop.ownerName || 'Private' }}
+            </div>
           </div>
 
-          <div class="border-t border-gray-100 pt-6">
-            <div class="flex justify-between items-center mb-5">
+          <div class="mt-auto border-t border-gray-50 pt-6">
+            <div class="flex justify-between items-center mb-6">
               <div>
-                <p class="text-[10px] text-gray-300 font-black uppercase mb-1">{{ $t('details.price') }}</p>
-                <p class="text-2xl font-black text-blue-700">{{ prop.price?.toLocaleString() }} ETB</p>
+                <p class="text-[9px] text-gray-300 font-black uppercase tracking-widest mb-1">{{ $t('details.price') }}</p>
+                <p class="text-2xl font-black text-hys-navy leading-none">
+                  {{ prop.price?.toLocaleString() }} <span class="text-xs font-bold text-hys-gold">ETB</span>
+                </p>
               </div>
-              <button @click="deleteProperty(prop.id)" class="bg-red-50 text-red-500 p-3 rounded-2xl hover:bg-red-500 hover:text-white transition-all">🗑️</button>
+              
+              <!-- Delete Button (Only for Owner) -->
+              <button 
+                v-if="currentUser && String(currentUser.id) === String(prop.userId)"
+                @click="deleteProperty(prop.id)" 
+                class="bg-red-50 text-red-500 p-3 rounded-2xl hover:bg-red-500 hover:text-white transition-all shadow-sm"
+              >
+                🗑️
+              </button>
             </div>
-            <router-link :to="'/property/' + prop.id" class="block w-full text-center bg-blue-900 text-white py-4 rounded-2xl text-xs font-black uppercase tracking-widest shadow-lg">
-               {{ $t('nav.home') }}
+
+            <!-- View Details Button -->
+            <router-link 
+              :to="'/property/' + prop.id" 
+              class="block w-full text-center bg-hys-navy text-white py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] transition-all shadow-lg hover:bg-hys-navy-light active:scale-95"
+            >
+              {{ $t('details.back') }}
             </router-link>
           </div>
         </div>
       </div>
+      
     </div>
   </div>
 </template>

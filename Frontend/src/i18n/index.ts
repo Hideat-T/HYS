@@ -10,7 +10,7 @@ const messages = {
     addForm: { title: 'Title', location: 'Location', price: 'Price (ETB)', type: 'Type', rooms: 'Rooms', description: 'Description', submit: 'Post Now 🚀', placeholderTitle: 'e.g. Villa in Bole', placeholderLocation: 'e.g. Addis Ababa', submitSuccess: 'Property posted! 📸' }
   },
   de: {
-    nav: { home: 'Start', listings: 'Meine Inserate', profile: 'Profil', add: 'Inserieren', login: 'Login' },
+    nav: { home: 'Start', listings: 'Meine Inserate', profile: 'Profil', add: 'Anzeige veröffentlichen', login: 'Login' },
     home: { title: 'Finde dein Traumhaus', search: 'Ort suchen...', all: 'Alle', house: 'Häuser', apartment: 'Wohnungen', noResults: 'Nichts gefunden' },
     loginPage: { title: 'Login', email: 'E-Mail Adresse', password: 'Passwort', submit: 'Einloggen 🚀', noAccount: 'Noch kein Konto?', signup: 'Registrieren' },
     registerPage: { title: 'Konto erstellen', name: 'Vollständiger Name / Firma', email: 'E-Mail Adresse', password: 'Passwort', rolePrivate: 'Privat', roleBroker: 'Makler', roleCompany: 'Firma', submit: 'Jetzt registrieren 🚀', alreadyAccount: 'Bereits ein Konto?', login: 'Hier einloggen' },
@@ -35,7 +35,7 @@ const messages = {
   },
   ti: {
     nav: { home: 'መበገሲ', listings: 'ናይ ባዕለይ', profile: 'ፕሮፋይል', add: 'ምልክታ ቅረጽ', login: 'እቶ' },
-    home: { title: 'ናይ ሕልሚ ገዛኹም ርከቡ', search: 'ቦታ ድለዩ...', all: 'ኩሉ', house: 'ገዛውቲ', apartment: 'ኣፓርታማ', noResults: 'የለን' },
+    home: { title: 'ናይ ሕልሚ ገዛኹም ርከቡ', search: 'ቦታ ድለዩ...', all: 'ኩሉ', house: 'ገዛ', apartment: 'ኣፓርታማ', noResults: 'የለን' },
     loginPage: { title: 'መእተዊ', email: 'ኢሜይል', password: 'መሕለፊ ቃል', submit: 'እቶ 🚀', noAccount: 'አካውንት የብልካን?', signup: 'ተመዝገብ' },
     registerPage: { title: 'አካውንት ፍጠሩ', name: 'ምሉእ ስም / ስም ትካል', email: 'ኢሜይል', password: 'መሕለፊ ቃል', rolePrivate: 'ውልቀሰብ', roleBroker: 'ደላላ', roleCompany: 'ትካል', submit: 'ሕጂ ተመዝገብ 🚀', alreadyAccount: 'አካውንት አለካ?', login: 'አብዚ እቶ' },
     details: { price: 'ዋጋ', rooms: 'ክፍልታት', contact: 'ድሌት ኣለኩም?', contactWhatsApp: 'ብዋትስኣፕ 💬', interestMessage: 'ሰላም! ተገዳስነት ኣለኒ፦ ', back: 'ዝርዝር', delete: 'ኣጥፊእካ', confirmDelete: 'ርግጸኛ ዲኻ?' },
